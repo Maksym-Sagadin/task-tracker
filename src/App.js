@@ -1,36 +1,54 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Header from './components/Header'
 import Tasks from './components/Tasks'
 import AddTask from './components/AddTask'
 
 const App = () => {
-  const [tasks, setTasks] = useState([
-    {
-        id: 1,
-        text: 'Feed/Walk the dogs',
-        day: 'Oct 21st at 8:00am',
-        reminder: true,
-    },
-    {
-        id: 2,
-        text: 'Leetcode problems',
-        day: 'Oct 21st at 12:22pm',
-        reminder: true,
-    }
-  ])
-
+  const [tasks, setTasks] = useState([])
   const [showAddTask, setShowAddTask] = useState (false)
+  
+  useEffect(() => {
+    const getTasks = async () => {
+      const tasksFromServer = await fetchTasks()
+      setTasks(tasksFromServer)
+    }
 
-  // Add Task
-  const addTask = (task) => {
+    getTasks()
+  }, [])
+
+  // Fetch Tasks
+  const fetchTasks = async () => {
+    const response = await fetch('http://localhost:5000/tasks')
+    const data = await response.json()
+
+    return data
+  }
+
+  // Add Task 
+  const addTask = async (task) => {
     // ID will always be 1 greater than the heighest ID or 1
-    const id = (tasks.length > 0) ? tasks[tasks.length-1].id + 1 : 1
-    const newTask = { id, ...task }
-    setTasks([...tasks, newTask])
+    // const id = (tasks.length > 0) ? tasks[tasks.length-1].id + 1 : 1
+    // const newTask = { id, ...task }
+    // setTasks([...tasks, newTask])
+
+    const response = await fetch('http://localhost:5000/tasks', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(task)
+    })
+
+    const data = await response.json()
+    setTasks([...tasks, data])
   }
 
   // Delete Task
-  const deleteTask = (id) => {
+  const deleteTask = async (id) => {
+    await fetch(`http://localhost:5000/tasks/${id}`, {
+      method: 'DELETE'
+    })
+
     setTasks(tasks.filter((tasks) => tasks.id !== id ))
   }
 
