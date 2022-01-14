@@ -1,4 +1,4 @@
-To view the app: [http://localhost:3000/task-tracker](Click Here)
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 # Getting Started with Create React App
 
@@ -15,5 +15,5 @@ Runs the JSON server in localhost:5000 .\
 ### `npm start`
 
 Runs the app in the development mode.\
-<!-- 
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser. -->
+ 
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
