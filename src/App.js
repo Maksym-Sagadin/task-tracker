@@ -91,7 +91,7 @@ const App = () => {
       <div className='container'>
         <Header onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask}/>
         <Routes>
-          <Route path='/' element={
+          <Route path='/task-tracker' element={
             <>
               {showAddTask && <AddTask onAdd={addTask} />}
               {tasks.length > 0 ? (<Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />) : (<h2>No Tasks</h2>)}
